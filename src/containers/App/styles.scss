@@ -1,12 +1,7 @@
 @import url(~sanitize.css);
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
 
-html, body, #react-root {
-  width: 100%;
-  height: 100%;
-}
-
-#react-root {
+html {
   --fontMain: 1rem 'Lato', sans-serif;
   --fontAlt: 0.85rem 'Lato', sans-serif;
 
@@ -26,6 +21,11 @@ html, body, #react-root {
   --colorBgAltTransparent: hsla(var(--bgColorAlt), 0.6);
 
   --barHeight: 3rem;
+}
+
+html, body, #react-root {
+  width: 100%;
+  height: 100%;
 
   color: var(--colorMain);
   background: var(--colorBg);
