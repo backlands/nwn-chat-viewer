@@ -15,6 +15,14 @@ export default () => {
       <Viewer chatlog={file} />
 
       <Upload onFileChange={setFile} />
+
+      <span className="notice">
+        No files are saved or uploaded on this site.
+        <br />
+        All log parsing is handled locally in your browser.
+        <br />
+        All data is stored in a temporary session in your browser.
+      </span>
     </div>
   );
 };

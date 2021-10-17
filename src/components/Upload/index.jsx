@@ -41,11 +41,9 @@ const Upload = ({
     <div className="Upload">
       <section className="uploader">
         <label htmlFor="upload">{label}</label>
-        <h3>Drag and drop your files anywhere or</h3>
-
         <button type="button" onClick={handleUploadBtnClick}>
           <FontAwesomeIcon icon={faFileUpload} size="3x" />
-          <span>Click to upload</span>
+          <span>load chatlog</span>
         </button>
 
         <input
