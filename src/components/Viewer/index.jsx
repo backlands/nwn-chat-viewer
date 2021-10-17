@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import Message from './Message';
 
+import { MESSAGE_REGEX } from '../../constants';
 import './styles.scss';
-
-const chatlog = localStorage.getItem('currentFile').split('\r\n');
-
-const MESSAGE_REGEX = /\[Talk\]|\[Whisper\]|\[Shout\]|\[DM\]|\[Tell\]\[Party\]/;
 
 const mergeableMessage = (message) => !message.match(MESSAGE_REGEX);
 
@@ -22,32 +19,40 @@ const filterableMessage = (message) => {
   return false;
 };
 
-const Viewer = () => {
+const Viewer = ({ chatlog }) => {
   // Merges together all consecutive paragraphs of messages based on last visible
   // speaking method: Talk, Whisper, Shout, DM, Tell, Party.
-  const mergedChatlog = chatlog.reduce((prev, curr) => {
-    if (filterableMessage(curr)) return prev;
+  const parsedChatlog = useMemo(() => {
+    if (chatlog) {
+      return chatlog.split('\r\n').reduce((prev, curr) => {
+        if (filterableMessage(curr)) return prev;
 
-    if (mergeableMessage(curr)) {
-      prev[prev.length - 1] = `${prev[prev.length - 1]}\r\n${curr}`;
+        if (mergeableMessage(curr)) {
+          prev[prev.length - 1] = `${prev[prev.length - 1]}\r\n${curr}`;
 
-      return [...prev];
+          return [...prev];
+        }
+
+        return [...prev, curr];
+      }, []).filter((message) => {
+        // Filters logs to remove NPC messages (player responses are still visible)
+        if (message.startsWith('[')) return true;
+        return false;
+      });
     }
 
-    return [...prev, curr];
-  }, []);
-
-  // Filtered logs to remove NPC messages (player responses are still visible)
-  const playerMessagesChatlog = mergedChatlog.filter((message) => {
-    if (message.startsWith('[')) return true;
     return false;
-  });
+  }, [chatlog]);
 
-  return (
-    <div className="Viewer">
-      {playerMessagesChatlog.map((message, index) => <Message key={index} message={message} />)}
-    </div>
-  );
+  if (parsedChatlog) {
+    return (
+      <div className="Viewer">
+        {parsedChatlog.map((message, index) => <Message key={index} message={message} />)}
+      </div>
+    );
+  }
+
+  return null;
 };
 
 export default Viewer;

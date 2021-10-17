@@ -1,24 +1,20 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useState } from 'react';
 
 import Upload from '../../components/Upload';
 import Viewer from '../../components/Viewer';
-import Placeholder from '../../components/Placeholder';
 
 import './styles.scss';
 
-export default () => (
-  <div className="App">
-    <Router>
-      <Route
-        render={({ location }) => (
-          <Switch location={location} key={location.pathname}>
-            <Route exact path="/"><Upload /></Route>
-            <Route exact path="/viewer"><Viewer /></Route>
-            <Route exact path="/highlights"><Placeholder text="Contact" /></Route>
-          </Switch>
-        )}
-      />
-    </Router>
-  </div>
-);
+export default () => {
+  const [file, setFile] = useState(undefined);
+
+  const classes = file ? 'App viewing' : 'App';
+
+  return (
+    <div className={classes}>
+      <Viewer chatlog={file} />
+
+      <Upload onFileChange={setFile} />
+    </div>
+  );
+};

@@ -7,5 +7,5 @@ export default webpackStarter({
   output: { path: path.resolve('dist') },
   styles: {
     sass: true,
-  }
+  },
 });

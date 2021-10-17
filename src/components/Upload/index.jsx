@@ -2,12 +2,11 @@ import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileUpload, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-const KILOBYTES_PER_BYTE = 1024;
-
-const convertBytesToKB = (bytes) => Math.round(bytes / KILOBYTES_PER_BYTE);
+import './styles.scss';
 
 const Upload = ({
   label,
+  onFileChange,
 }) => {
   const fileInputField = useRef(null);
   const [file, setFile] = useState({});
@@ -21,11 +20,11 @@ const Upload = ({
 
     // Closure to capture the file information.
     reader.addEventListener('load', (event) => {
-      localStorage.setItem('currentFile', event.target.result);
+      onFileChange(event.target.result);
     });
 
     // Read in the image file as a data URL.
-    reader.readAsText(document);
+    reader.readAsText(document, 'windows-1252');
   };
 
   const handleFileChange = (event) => {
@@ -33,15 +32,20 @@ const Upload = ({
     readFile(event.target.files[0]);
   };
 
+  const removeCurrentFile = () => {
+    setFile({});
+    onFileChange(undefined);
+  };
+
   return (
-    <>
-      <section>
+    <div className="Upload">
+      <section className="uploader">
         <label htmlFor="upload">{label}</label>
-        <p>Drag and drop your files anywhere or</p>
+        <h3>Drag and drop your files anywhere or</h3>
 
         <button type="button" onClick={handleUploadBtnClick}>
-          <FontAwesomeIcon icon={faFileUpload} />
-          <span>Upload a chat log...</span>
+          <FontAwesomeIcon icon={faFileUpload} size="3x" />
+          <span>Click to upload</span>
         </button>
 
         <input
@@ -55,21 +59,19 @@ const Upload = ({
         />
       </section>
 
-      <article>
-        <span>Current chat log:</span>
+      {
+        file?.name && (
+          <article className="currentFile">
+            <h4>Current chat log:</h4>
 
-        <section>
-          <div>
-            <span>{file.name}</span>
-            <aside>
-              <span>{`${convertBytesToKB(file.size)} kb`}</span>
-
-              <FontAwesomeIcon icon={faTrashAlt} />
-            </aside>
-          </div>
-        </section>
-      </article>
-    </>
+            <section>
+              <span>{file.name}</span>
+              <FontAwesomeIcon icon={faTrashAlt} onClick={removeCurrentFile} size="lg" />
+            </section>
+          </article>
+        )
+      }
+    </div>
   );
 };
 

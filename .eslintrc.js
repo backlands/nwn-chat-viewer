@@ -4,6 +4,7 @@ module.exports = {
     jest: true,
   },
   rules: {
+    'react/no-array-index-key': 0,
     'react/prop-types': 0,
     'no-param-reassign': ['error', { props: false }],
   },

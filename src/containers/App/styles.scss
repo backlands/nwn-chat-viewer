@@ -1,9 +1,9 @@
 @import url(~sanitize.css);
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap?family=Lato:wght@300;400&display=swap');
 
 html {
-  --fontMain: 1rem 'Lato', sans-serif;
-  --fontAlt: 0.85rem 'Lato', sans-serif;
+  --fontMain: 1rem 'Roboto Slab', serif;
+  --fontAlt: 1rem 'Lato', sans-serif;
 
   font: var(--fontMain);
 
@@ -12,7 +12,7 @@ html {
 
   --colorNone: hsla(0, 0%, 0%, 0);
 
-  --bgColor: 0, 0%, 10%;
+  --bgColor: 17, 21%, 11%;
   --colorBg: hsl(var(--bgColor));
   --colorBgTransparent: hsla(var(--bgColor), 0.6);
 
@@ -29,4 +29,17 @@ html, body, #react-root {
 
   color: var(--colorMain);
   background: var(--colorBg);
+}
+
+#react-root {
+  background-image: url("../../assets/background.jpg");
+  background-size: cover;
+  background-position: center center;
+}
+
+.App {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  background: rgba(0,0,0, 0.3);
 }

@@ -1,0 +1,59 @@
+.Upload {
+  align-self: center;
+  margin: 0 auto;
+  border: 3px solid white;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  background: rgba(0,0,0,0.5);
+  font: var(--fontAlt);
+
+  .uploader {
+    h3 {
+      margin-top: 0;
+    }
+
+    button {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0 auto;
+      appearance: none;
+      border: 0;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      font-size: 24px;
+
+      span {
+        display: block;
+        height: 100%;
+        padding-left: 10px;
+        padding-right: 20px;
+        text-transform: uppercase;
+      }
+
+      svg {
+        margin: 20px;
+      }
+    }
+
+    input[type=file] { display: none; }
+  }
+
+  .currentFile {
+    h4 {
+      margin-bottom: 10px;
+
+    }
+
+    span {
+      max-width: 100%;
+      font-size: 16px;
+    }
+
+    svg {
+      margin-left: 10px;
+    }
+  }
+}

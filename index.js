@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 
 const app = express();
-const publicFolder = path.resolve(__dirname, './client');
+const publicFolder = path.resolve(__dirname, './src');
 app.use(express.static(publicFolder));
 
 if (process.env.NODE_ENV !== 'development') {
