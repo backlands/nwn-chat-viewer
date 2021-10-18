@@ -15,6 +15,7 @@ const filterableMessage = (message) => {
   if (message.includes('Sent to DM:')) return true;
   if (message.includes('Your cryptographic public identity ')) return true;
   if (message.includes('Game is using local port')) return true;
+  if (message.includes('[CHAT WINDOW TEXT]')) return true;
   if (message === '*** ValidateGFFResource sent by user.') return true;
   return false;
 };

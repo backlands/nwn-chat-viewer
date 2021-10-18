@@ -26,17 +26,36 @@
     max-width: 500px;
   }
 
-  .username {
-    color: red;
-    // display: none;
+  .talk {
+    color: rgb(240, 240, 240);
   }
 
-  .type {
-    color: orange;
-    // display: none;
+  .shout {
+    color: rgb(255, 239, 80);
+  }
+
+  .whisper {
+    color: rgb(128, 128, 128);
+  }
+
+  .tell {
+    color: rgb(32, 255, 32);
+  }
+
+  .server {
+    color: rgb(176, 176, 176);
+  }
+
+  .server {
+    color: rgb(255, 102, 1);
+  }
+
+  .dm {
+    color: rgb(16, 223, 255);
   }
 
   .character {
     color: #8778ef;
+    padding-bottom: 0;
   }
 }

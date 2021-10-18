@@ -1,8 +1,10 @@
 export const COLOR_START_REGEX = /(<c[^>]+>)/;
 
-export const COLOR_END_REGEX = /(<\/c[^>]*>)/;
+export const COLOR_END_REGEX = /(<\/c[^>]*>)/ig;
 
-export const COLOR_KEYS_REGEX = /<c(.?)(.?)(.?)>/;
+export const COLOR_KEYS_REGEX = /<c(.?)(.?)(.?)>/ig;
+
+export const MATCHING_PAIRS = /<c(.?)(.?)(.?)>(.*)<\/c>/;
 
 export const MESSAGE_REGEX = / (\[Talk\]|\[Whisper\]|\[Shout\]|\[DM\]|\[Tell\]\[Party\])/;
 
