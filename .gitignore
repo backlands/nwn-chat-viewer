@@ -90,3 +90,6 @@ typings/
 
 # Build files
 dist
+
+# Example files
+samples
