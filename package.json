@@ -6,7 +6,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon --exec babel-node index.js",
     "lint": "eslint --ext .js,.jsx src/",
-    "test": "jest --verbose"
+    "test": "jest --verbose",
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "repository": {
     "type": "git",
