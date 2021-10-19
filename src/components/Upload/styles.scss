@@ -39,6 +39,21 @@
     }
 
     input[type=file] { display: none; }
+
+    label > span {
+      display: block;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    select, option {
+      appearance: none;
+      border: 3px solid white;
+      background: transparent;
+      padding: 10px;
+      font-size: 14px;
+      color: white;
+    }
   }
 
   .currentFile {

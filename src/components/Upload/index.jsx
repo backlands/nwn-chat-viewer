@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useCallback, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileUpload, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,12 +10,13 @@ const Upload = ({
 }) => {
   const fileInputField = useRef(null);
   const [file, setFile] = useState({});
+  const [encoding, setEncoding] = useState('windows-1252');
 
   const handleUploadBtnClick = () => {
     fileInputField.current.click();
   };
 
-  const readFile = (document) => {
+  const readFile = useCallback((document, encode) => {
     const reader = new FileReader();
 
     // Closure to capture the file information.
@@ -24,12 +25,17 @@ const Upload = ({
     });
 
     // Read in the image file as a data URL.
-    reader.readAsText(document, 'windows-1252');
-  };
+    reader.readAsText(document, encode);
+  }, [onFileChange]);
+
+  useEffect(() => {
+    if (file.size > 0) {
+      readFile(file, encoding);
+    }
+  }, [encoding, readFile, file]);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
-    readFile(event.target.files[0]);
   };
 
   const removeCurrentFile = () => {
@@ -55,6 +61,21 @@ const Upload = ({
           value=""
           ref={fileInputField}
         />
+
+        <label htmlFor="encoding">
+          <span>File Encoding</span>
+          <select
+            id="encoding"
+            defaultValue={encoding}
+            onChange={({ target: { value } }) => setEncoding(value)}
+          >
+            <option
+              label="Windows 1252 (Default)"
+              value="windows-1252"
+            />
+            <option label="UTF-8" value="utf8" />
+          </select>
+        </label>
       </section>
 
       {
