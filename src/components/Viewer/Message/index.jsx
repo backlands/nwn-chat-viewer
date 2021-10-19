@@ -18,6 +18,8 @@ const Message = ({ message }) => {
 
         {content.split('\r\n').map((text, index) => (
           <p key={index} className={type.toLowerCase()}>
+            <span className={`type ${type.toLowerCase()}`}>{`[${type}] `}</span>
+
             {language && (
               <span style={{ color: `rgb(${color[0]}, ${color[1]}, ${color[2]})` }}>
                 {`${language}: `}
