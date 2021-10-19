@@ -25,6 +25,53 @@ export const matchToColoredMessage = (_, r, g, b, message) => {
   return [color, message];
 };
 
+const getUsername = (message) => {
+  const usernameSearch = message.match(/^\[([^\]]*)\]/);
+  // eslint-disable-next-line no-unused-vars
+  const [_, username] = usernameSearch || ['', ''];
+
+  return username;
+};
+
+const getCharacter = (message, type) => {
+  const search = new RegExp(`] ([^:]*): \\[${type}\\]`);
+  const characterSearch = message.match(search);
+  // eslint-disable-next-line no-unused-vars
+  const [_, character] = characterSearch || ['', ''];
+
+  return character;
+};
+
+const getContent = (message, type) => {
+  const search = new RegExp(`\\[${type}\\]\\s*(.*)$`);
+  const contentSearch = message.match(search);
+  // eslint-disable-next-line no-unused-vars
+  const [_, content] = contentSearch || ['', ''];
+
+  return content;
+};
+
+const getLanguage = (message) => {
+  const languageSearch = message.match(/<c(.?)(.?)(.?)>(\[[^\]]*\]):<\/c>/);
+  // eslint-disable-next-line no-unused-vars
+  const [_, r, g, b, lang] = languageSearch || ['', '0', '0', '0', ''];
+  const language = [lang, convertToRGB(r, g, b)];
+
+  return language;
+};
+
+export const parseTell = (message) => {
+  const username = getUsername(message);
+
+  const character = getCharacter(message, 'Tell');
+
+  const content = getContent(message, 'Tell');
+
+  const language = getLanguage(message);
+
+  return { username, character, type: 'Tell', language, content };
+};
+
 export const destructureMessage = (message) => {
   const usernameSearch = message.match(/^\[([^\]]*)\]/);
   const [_, username] = usernameSearch || ['', ''];
@@ -50,5 +97,5 @@ export const destructureMessage = (message) => {
     .replaceAll(COLOR_KEYS_REGEX, '')
     .replaceAll(COLOR_END_REGEX, '');
 
-  return [username, character, type, language, content];
+  return { username, character, type, language, content };
 };

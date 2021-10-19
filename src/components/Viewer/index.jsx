@@ -2,10 +2,11 @@ import React, { useMemo } from 'react';
 
 import Message from './Message';
 
+import { destructureMessage, parseTell } from '../../utilities/parsing';
 import { MESSAGE_REGEX } from '../../constants';
 import './styles.scss';
 
-const mergeableMessage = (message) => !message.match(MESSAGE_REGEX);
+const mergeableMessage = (message) => message.match(MESSAGE_REGEX);
 
 const filterableMessage = (message) => {
   if (message === 'Unknown Update sub-message') return true;
@@ -27,18 +28,23 @@ const Viewer = ({ chatlog }) => {
       return chatlog.split('\r\n').reduce((prev, curr) => {
         if (filterableMessage(curr)) return prev;
 
-        if (mergeableMessage(curr)) {
-          prev[prev.length - 1] = `${prev[prev.length - 1]}\r\n${curr}`;
+        const type = mergeableMessage(curr);
+
+        if (!type) {
+          const previousMessage = prev[prev.length - 1];
+          previousMessage.content = `${previousMessage.content}\r\n${curr}`;
 
           return [...prev];
         }
 
-        return [...prev, curr];
-      }, []).filter((message) => {
-        // Filters logs to remove NPC messages (player responses are still visible)
-        if (message.startsWith('[')) return true;
-        return false;
-      });
+        switch (type[1]) {
+          case 'Tell':
+            return [...prev, parseTell(curr)];
+
+          default:
+            return [...prev, destructureMessage(curr)];
+        }
+      }, []);
     }
 
     return false;
