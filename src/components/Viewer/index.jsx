@@ -12,7 +12,6 @@ const filterableMessage = (message) => {
   if (message.includes('nwsync:')) return true;
   if (message.includes('Error:')) return true;
   if (message.includes('GOG:')) return true;
-  if (message.includes('Sent to DM:')) return true;
   if (message.includes('Your cryptographic public identity ')) return true;
   if (message.includes('Game is using local port')) return true;
   if (message.includes('[CHAT WINDOW TEXT]')) return true;
