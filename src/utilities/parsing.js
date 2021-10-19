@@ -31,7 +31,10 @@ export const destructureMessage = (message) => {
   const trimUsername = message.slice(_?.length || 0, message.length).trim();
 
   const characterSearch = trimUsername.match(/([^:]*):/);
-  const [__, character] = characterSearch || ['', ''];
+  const disguiseSearch = trimUsername.match(/<c...>([^<]*)<\/c>:/);
+
+  const [__, character] = disguiseSearch || characterSearch || ['', ''];
+
   const trimCharacter = trimUsername.slice(__?.length + 1 || 0, trimUsername.length).trim();
 
   const typeSearch = trimCharacter.match(/\[([^\]]*)\]/);
