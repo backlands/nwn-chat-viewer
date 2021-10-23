@@ -33,6 +33,14 @@ const getUsername = (message) => {
   return username;
 };
 
+const getDatetime = (message) => {
+  const datetimeSearch = message.match(/^\[CHAT WINDOW TEXT\] \[([^\]]*)\]/);
+  // eslint-disable-next-line no-unused-vars
+  const [_, datetime] = datetimeSearch || ['', false];
+
+  return datetime;
+};
+
 const getCharacter = (message, type) => {
   const search = new RegExp(`] ([^:]*): \\[${type}\\]`);
 
@@ -83,6 +91,14 @@ export const parseConversation = (message, type) => {
   const language = getLanguage(message);
 
   return { username, character, type, language, content };
+};
+
+export const parseChatLog = (message) => {
+  const datetime = getDatetime(message);
+
+  const content = message.replace(/^\[[^\]]*\] \[[^\]]*\]/, '');
+
+  return { username: false, character: datetime, type: false, language: false, content };
 };
 
 export const destructureMessage = (message) => {

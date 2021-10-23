@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import Log from './Log';
 
-import { destructureMessage, parseConversation } from '../../utilities/parsing';
+import { destructureMessage, parseConversation, parseChatLog } from '../../utilities/parsing';
 import { MESSAGE_REGEX } from '../../constants';
 import './styles.scss';
 
@@ -44,7 +44,7 @@ const Viewer = ({ chatlog }) => {
 
         switch (type) {
           case 'CHAT WINDOW TEXT':
-            return { dialog, combat: [...combat, destructureMessage(curr)] };
+            return { dialog, combat: [...combat, parseChatLog(curr)] };
 
           case 'Talk':
           case 'Whisper':
