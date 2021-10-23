@@ -6,7 +6,7 @@ export const COLOR_KEYS_REGEX = /<c(.?)(.?)(.?)>/ig;
 
 export const MATCHING_PAIRS = /<c(.?)(.?)(.?)>(.*)<\/c>/;
 
-export const MESSAGE_REGEX = /\[(Talk|Whisper|Shout|DM|Tell|Party)\]/;
+export const MESSAGE_REGEX = /\[(Talk|Whisper|Shout|DM|Tell|Party|CHAT WINDOW TEXT)\]/;
 
 export const NWN_COLOR_TABLE = {
   34: '"',

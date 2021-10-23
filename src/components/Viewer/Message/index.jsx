@@ -4,8 +4,7 @@ import PORTRAIT from '../../../assets/blank_portrait.jpg';
 import './styles.scss';
 
 const Message = ({ message }) => {
-  console.log(message);
-  const { username, character, type, language: [language, color], content } = message;
+  const { username, character, type, language, content } = message;
 
   return (
     <div className="Message">
@@ -18,13 +17,14 @@ const Message = ({ message }) => {
 
         {content.split('\r\n').map((text, index) => (
           <p key={index} className={type.toLowerCase()}>
-            {language && index === 0 && (
-              <span style={{ color: `rgb(${color[0]}, ${color[1]}, ${color[2]})` }}>
-                {`${language}: `}
+            <span className={`type ${type.toLowerCase()}`}>{`[${type}] `}</span>
+
+            {language.name && (
+              <span style={{ color: `rgb(${language.color[0]}, ${language.color[1]}, ${language.color[2]})` }}>
+                {`[${language.name}]: `}
               </span>
             )}
 
-            <span className={`type ${type.toLowerCase()}`}>{`[${type}] `}</span>
             {text}
           </p>
         ))}

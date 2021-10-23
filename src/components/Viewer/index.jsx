@@ -2,21 +2,25 @@ import React, { useMemo } from 'react';
 
 import Message from './Message';
 
-import { destructureMessage, parseTell } from '../../utilities/parsing';
+import { destructureMessage, parseConversation } from '../../utilities/parsing';
 import { MESSAGE_REGEX } from '../../constants';
 import './styles.scss';
 
-const mergeableMessage = (message) => message.match(MESSAGE_REGEX);
+const mergeableMessage = (message) => {
+  const search = message.match(MESSAGE_REGEX);
+
+  return search === null ? false : search[1];
+};
 
 const filterableMessage = (message) => {
   if (message === 'Unknown Update sub-message') return true;
   if (message.includes('nwsync:')) return true;
   if (message.includes('Error:')) return true;
   if (message.includes('GOG:')) return true;
-  if (message.includes('Your cryptographic public identity ')) return true;
+  if (message.includes('Your cryptographic public identity')) return true;
   if (message.includes('Game is using local port')) return true;
-  if (message.includes('[CHAT WINDOW TEXT]')) return true;
-  if (message === '*** ValidateGFFResource sent by user.') return true;
+  if (message.includes('ValidateGFFResource')) return true;
+  if (message === '') return true;
   return false;
 };
 
@@ -26,20 +30,27 @@ const Viewer = ({ chatlog }) => {
   const parsedChatlog = useMemo(() => {
     if (chatlog) {
       return chatlog.split('\r\n').reduce((prev, curr) => {
-        if (filterableMessage(curr)) return prev;
-
+        const filter = filterableMessage(curr);
+        const previousMessage = prev.length - 1 >= 0 ? prev[prev.length - 1] : false;
         const type = mergeableMessage(curr);
 
-        if (!type) {
-          const previousMessage = prev[prev.length - 1];
-          previousMessage.content = `${previousMessage.content}\r\n${curr}`;
+        if (filter) return prev;
 
-          return [...prev];
+        if (!type && previousMessage) {
+          previousMessage.content = `${previousMessage?.content}\r\n${curr}`;
+
+          return prev;
         }
 
-        switch (type[1]) {
+        switch (type) {
+          case 'CHAT WINDOW TEXT':
+            return prev;
+
+          case 'Talk':
+          case 'Whisper':
+          case 'Shout':
           case 'Tell':
-            return [...prev, parseTell(curr)];
+            return [...prev, parseConversation(curr, type)];
 
           default:
             return [...prev, destructureMessage(curr)];
