@@ -1,0 +1,31 @@
+.Log {
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 600px;
+  margin-right: 2px;
+
+  button {
+    margin: 0;
+    padding: 10px 20px;
+    background: rgb(30, 30, 30);
+    text-align: left;
+    font-size: 18px;
+    font-family: var(--fontMain);
+    color: white;
+    border: 0;
+  }
+
+  section {
+    display: none;
+    padding: 20px;
+    background: rgba(0,0,0,0.5);
+    overflow-x: none;
+    overflow-y: scroll;
+
+    &.visible {
+      display: block;
+    }
+  }
+}

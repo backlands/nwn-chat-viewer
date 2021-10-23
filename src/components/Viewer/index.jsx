@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import Message from './Message';
+import Log from './Log';
 
 import { destructureMessage, parseConversation } from '../../utilities/parsing';
 import { MESSAGE_REGEX } from '../../constants';
@@ -29,33 +29,39 @@ const Viewer = ({ chatlog }) => {
   // speaking method: Talk, Whisper, Shout, DM, Tell, Party.
   const parsedChatlog = useMemo(() => {
     if (chatlog) {
-      return chatlog.split('\r\n').reduce((prev, curr) => {
+      return chatlog.split('\r\n').reduce(({ dialog, combat }, curr) => {
         const filter = filterableMessage(curr);
-        const previousMessage = prev.length - 1 >= 0 ? prev[prev.length - 1] : false;
+        const previousMessage = dialog.length - 1 >= 0 ? dialog[dialog.length - 1] : false;
         const type = mergeableMessage(curr);
 
-        if (filter) return prev;
+        if (filter) return { dialog, combat };
 
         if (!type && previousMessage) {
           previousMessage.content = `${previousMessage?.content}\r\n${curr}`;
 
-          return prev;
+          return { dialog, combat };
         }
 
         switch (type) {
           case 'CHAT WINDOW TEXT':
-            return prev;
+            return { dialog, combat: [...combat, destructureMessage(curr)] };
 
           case 'Talk':
           case 'Whisper':
           case 'Shout':
           case 'Tell':
-            return [...prev, parseConversation(curr, type)];
+            return {
+              dialog: [...dialog, parseConversation(curr, type)],
+              combat,
+            };
 
           default:
-            return [...prev, destructureMessage(curr)];
+            return {
+              dialog: [...dialog, destructureMessage(curr)],
+              combat,
+            };
         }
-      }, []);
+      }, { dialog: [], combat: [] });
     }
 
     return false;
@@ -64,7 +70,8 @@ const Viewer = ({ chatlog }) => {
   if (parsedChatlog) {
     return (
       <div className="Viewer">
-        {parsedChatlog.map((message, index) => <Message key={index} message={message} />)}
+        <Log title="Chat Log" chatlog={parsedChatlog.dialog} />
+        <Log title="Gameplay Log" chatlog={parsedChatlog.combat} />
       </div>
     );
   }
