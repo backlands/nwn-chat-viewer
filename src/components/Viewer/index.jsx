@@ -70,7 +70,7 @@ const Viewer = ({ chatlog }) => {
   if (parsedChatlog) {
     return (
       <div className="Viewer">
-        <Log title="Chat Log" chatlog={parsedChatlog.dialog} />
+        <Log title="Chat Log" portraits chatlog={parsedChatlog.dialog} />
         <Log title="Gameplay Log" chatlog={parsedChatlog.combat} />
       </div>
     );

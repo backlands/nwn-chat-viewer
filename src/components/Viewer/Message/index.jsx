@@ -3,14 +3,16 @@ import React from 'react';
 import PORTRAIT from '../../../assets/blank_portrait.jpg';
 import './styles.scss';
 
-const Message = ({ message }) => {
+const Message = ({ message, portrait }) => {
   const { username, character, type, language, content } = message;
 
   return (
     <div className="Message">
-      <div className="portrait">
-        <img alt={username || character} title={username || character} src={PORTRAIT} />
-      </div>
+      {portrait && (
+        <div className="portrait">
+          <img alt={username || character} title={username || character} src={PORTRAIT} />
+        </div>
+      )}
 
       <div className="content">
         <p className="character">{character || username}</p>
