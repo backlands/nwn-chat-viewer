@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Badge from '../../components/Badge';
 import Upload from '../../components/Upload';
 import Viewer from '../../components/Viewer';
 
@@ -12,6 +13,8 @@ export default () => {
 
   return (
     <div className={classes}>
+      <Badge />
+
       <Viewer chatlog={file} />
 
       <Upload onFileChange={setFile} />

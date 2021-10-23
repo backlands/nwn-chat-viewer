@@ -1,0 +1,15 @@
+.Badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+  border: 1px solid white;
+  color: white;
+  transition: background-color 0.5s ease-in, border 0.5s ease-in;
+  text-decoration: none;
+
+  &:hover {
+    background: black;
+    border: 1px solid black;
+  }
+}
