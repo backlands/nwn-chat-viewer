@@ -29,10 +29,11 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_ID }}
           AWS_S3BUCKET_NAME: ${{ secrets.AWS_S3BUCKET_NAME }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION_NAME }}
-          CF_DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION }}
         run: |
           aws s3 sync ./dist s3://$AWS_S3BUCKET_NAME
 
       - name: Invalidate CloudFront cache
+        env:
+          CF_DISTRIBUTION: ${{ secrets.CLOUDFRONT_DISTRIBUTION }}
         run: |
           aws cloudfront create-invalidation --distribution-id $CF_DISTRIBUTION --paths '/*';
