@@ -53,7 +53,10 @@ const getCharacter = (message, type) => {
   // eslint-disable-next-line no-unused-vars
   const [_, character] = characterSearch || ['', ''];
 
-  return character.trim() || false;
+  return character
+    .replace(COLOR_KEYS_REGEX, '')
+    .replace(COLOR_END_REGEX, '')
+    .trim() || false;
 };
 
 const getContent = (message, type) => {

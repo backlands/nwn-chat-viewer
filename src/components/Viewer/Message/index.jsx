@@ -19,7 +19,7 @@ const Message = ({ message, portrait }) => {
 
         {content.split('\r\n').map((text, index) => (
           <p key={index} className={type ? type.toLowerCase() : false}>
-            {type && (
+            {type && index === 0 && (
               <span className={`type ${type.toLowerCase()}`}>{`[${type}] `}</span>
             )}
 
