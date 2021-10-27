@@ -18,7 +18,7 @@ const Message = ({ message, portrait }) => {
         <p className="character">{character || username}</p>
 
         {content.split('\r\n').map((text, index) => (
-          <p key={index} className={type ? type.toLowerCase() : false}>
+          <p key={index} className={type ? type.toLowerCase() : undefined}>
             {type && index === 0 && (
               <span className={`type ${type.toLowerCase()}`}>{`[${type}] `}</span>
             )}
