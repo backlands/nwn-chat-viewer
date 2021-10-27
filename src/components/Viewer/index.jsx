@@ -12,7 +12,9 @@ const mergeableMessage = (message) => {
   return search === null ? false : search[1];
 };
 
-const filterableMessage = (message) => {
+const filterableMessage = (message, endings) => {
+  if (message === endings) return true;
+  if (message === '') return true;
   if (message === 'Unknown Update sub-message') return true;
   if (message.includes('nwsync:')) return true;
   if (message.includes('Error:')) return true;
@@ -20,7 +22,6 @@ const filterableMessage = (message) => {
   if (message.includes('Your cryptographic public identity')) return true;
   if (message.includes('Game is using local port')) return true;
   if (message.includes('ValidateGFFResource')) return true;
-  if (message === '') return true;
   return false;
 };
 
@@ -31,22 +32,33 @@ const Viewer = ({ chatlog }) => {
     if (chatlog) {
       const LINE_ENDINGS = chatlog.match('\r\n') ? '\r\n' : '\n';
 
-      return chatlog.split(LINE_ENDINGS).reduce(({ dialog, combat }, curr) => {
-        const filter = filterableMessage(curr);
-        const previousMessage = dialog.length - 1 >= 0 ? dialog[dialog.length - 1] : false;
+      return chatlog.split(LINE_ENDINGS).reduce(({ dialog, combat, lastType }, curr) => {
+        const filter = filterableMessage(curr, LINE_ENDINGS);
         const type = mergeableMessage(curr);
 
-        if (filter) return { dialog, combat };
+        let previousMessage;
+
+        if (lastType === 'dialog') {
+          previousMessage = dialog.length - 1 >= 0 ? dialog[dialog.length - 1] : false;
+        } else {
+          previousMessage = combat.length - 1 >= 0 ? combat[combat.length - 1] : false;
+        }
+
+        if (filter) return { dialog, combat, lastType };
 
         if (!type && previousMessage) {
           previousMessage.content = `${previousMessage?.content}\r\n${curr}`;
 
-          return { dialog, combat };
+          return { dialog, combat, lastType };
         }
 
         switch (type) {
           case 'CHAT WINDOW TEXT':
-            return { dialog, combat: [...combat, parseChatLog(curr)] };
+            return {
+              dialog,
+              combat: [...combat, parseChatLog(curr)],
+              lastType: 'combat',
+            };
 
           case 'Talk':
           case 'Whisper':
@@ -55,15 +67,17 @@ const Viewer = ({ chatlog }) => {
             return {
               dialog: [...dialog, parseConversation(curr, type)],
               combat,
+              lastType: 'dialog',
             };
 
           default:
             return {
               dialog: [...dialog, destructureMessage(curr)],
               combat,
+              lastType: 'dialog',
             };
         }
-      }, { dialog: [], combat: [] });
+      }, { dialog: [], combat: [], lastType: undefined });
     }
 
     return false;
