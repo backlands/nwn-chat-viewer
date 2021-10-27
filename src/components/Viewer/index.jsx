@@ -29,7 +29,9 @@ const Viewer = ({ chatlog }) => {
   // speaking method: Talk, Whisper, Shout, DM, Tell, Party.
   const parsedChatlog = useMemo(() => {
     if (chatlog) {
-      return chatlog.split('\r\n').reduce(({ dialog, combat }, curr) => {
+      const LINE_ENDINGS = chatlog.match('\r\n') ? '\r\n' : '\n';
+
+      return chatlog.split(LINE_ENDINGS).reduce(({ dialog, combat }, curr) => {
         const filter = filterableMessage(curr);
         const previousMessage = dialog.length - 1 >= 0 ? dialog[dialog.length - 1] : false;
         const type = mergeableMessage(curr);
