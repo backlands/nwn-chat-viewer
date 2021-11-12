@@ -2,6 +2,7 @@ import {
   NWN_COLOR_TABLE,
   COLOR_KEYS_REGEX,
   COLOR_END_REGEX,
+  MESSAGE_REGEX,
 } from '../constants';
 
 export const getAsciiCharCode = (character) => {
@@ -13,6 +14,25 @@ export const getAsciiCharCode = (character) => {
   }
 
   return value >= 0 && value <= 255 ? value : 252;
+};
+
+export const mergeableMessage = (message) => {
+  const search = message.match(MESSAGE_REGEX);
+
+  return search === null ? false : search[1];
+};
+
+export const filterableMessage = (message, endings) => {
+  if (message === endings) return true;
+  if (message === '') return true;
+  if (message === 'Unknown Update sub-message') return true;
+  if (message.includes('nwsync:')) return true;
+  if (message.includes('Error:')) return true;
+  if (message.includes('GOG:')) return true;
+  if (message.includes('Your cryptographic public identity')) return true;
+  if (message.includes('Game is using local port')) return true;
+  if (message.includes('ValidateGFFResource')) return true;
+  return false;
 };
 
 export const convertToRGB = (r, g, b) => (
@@ -47,7 +67,7 @@ const getCharacter = (message, type) => {
   let characterSearch = message.match(search);
 
   if (characterSearch === null) {
-    characterSearch = message.match(new RegExp(/(.*)(?=:)/));
+    characterSearch = message.match(new RegExp(/([^:]*)(?=:)/));
   }
 
   // eslint-disable-next-line no-unused-vars

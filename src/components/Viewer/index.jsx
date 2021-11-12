@@ -2,28 +2,14 @@ import React, { useMemo } from 'react';
 
 import Log from './Log';
 
-import { destructureMessage, parseConversation, parseChatLog } from '../../utilities/parsing';
-import { MESSAGE_REGEX } from '../../constants';
+import {
+  destructureMessage,
+  parseConversation,
+  parseChatLog,
+  mergeableMessage,
+  filterableMessage,
+} from '../../utilities/parsing';
 import './styles.scss';
-
-const mergeableMessage = (message) => {
-  const search = message.match(MESSAGE_REGEX);
-
-  return search === null ? false : search[1];
-};
-
-const filterableMessage = (message, endings) => {
-  if (message === endings) return true;
-  if (message === '') return true;
-  if (message === 'Unknown Update sub-message') return true;
-  if (message.includes('nwsync:')) return true;
-  if (message.includes('Error:')) return true;
-  if (message.includes('GOG:')) return true;
-  if (message.includes('Your cryptographic public identity')) return true;
-  if (message.includes('Game is using local port')) return true;
-  if (message.includes('ValidateGFFResource')) return true;
-  return false;
-};
 
 const Viewer = ({ chatlog }) => {
   // Merges together all consecutive paragraphs of messages based on last visible
