@@ -4,7 +4,6 @@
   flex-direction: column;
   justify-content: flex-end;
   width: 600px;
-  margin-right: 2px;
 
   button {
     margin: 0;
@@ -25,7 +24,7 @@
   section {
     display: none;
     padding: 20px;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.8);
     overflow-x: none;
     overflow-y: scroll;
 
