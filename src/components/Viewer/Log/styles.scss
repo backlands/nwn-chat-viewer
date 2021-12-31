@@ -1,23 +1,31 @@
 .Log {
-  max-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   width: 600px;
 
-  button {
-    margin: 0;
-    padding: 10px 20px;
-    background: rgb(30, 30, 30);
-    text-align: left;
-    font-size: 18px;
-    font-family: var(--fontMain);
-    color: white;
-    border: 0;
-    cursor: pointer;
-    transition: background 0.5s ease-in;
-    &:hover {
-      background: black;
+  .heading {
+    display: flex;
+
+    button {
+      margin: 0;
+      padding: 10px 20px;
+      background: rgb(30, 30, 30);
+      text-align: left;
+      font-size: 18px;
+      font-family: var(--fontMain);
+      color: white;
+      border: 0;
+      cursor: pointer;
+      transition: background 0.5s ease-in;
+
+      &:hover {
+        background: black;
+      }
+
+      &:first-child {
+        flex-grow: 1;
+      }
     }
   }
 
@@ -27,6 +35,8 @@
     background: rgba(0,0,0,0.8);
     overflow-x: none;
     overflow-y: scroll;
+
+    font: var(--fontMain);
 
     &.visible {
       display: block;
