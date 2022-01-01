@@ -1,0 +1,16 @@
+.Badge {
+  padding: 10px;
+  margin-left: auto;
+  color: black;
+  background-color: white;
+  transition: background-color 0.3s ease-in;
+  text-decoration: none;
+
+  svg {
+    margin-right: 5px;
+  }
+
+  &:hover {
+    background-color: #8778ef;
+  }
+}

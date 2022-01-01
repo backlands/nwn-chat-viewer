@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Badge from '../../components/Badge';
+import Header from '../../components/Header';
 import Upload from '../../components/Upload';
 import Viewer from '../../components/Viewer';
 
@@ -13,11 +13,13 @@ export default () => {
 
   return (
     <div className={classes}>
-      <Badge />
+      <Header />
 
-      <Viewer chatlog={file} />
+      <div className="contents">
+        <Viewer chatlog={file} />
 
-      <Upload onFileChange={setFile} />
+        <Upload onFileChange={setFile} />
+      </div>
 
       <span className="notice">
         No files are saved or uploaded on this site.
