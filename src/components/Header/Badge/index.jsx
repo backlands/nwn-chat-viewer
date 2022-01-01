@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+
 import './styles.scss';
 
 const Badge = () => (
@@ -11,9 +11,7 @@ const Badge = () => (
     target="_blank"
     rel="noreferrer"
   >
-    <FontAwesomeIcon
-      icon={faGithub}
-    />
+    <FontAwesomeIcon icon={faGithub} />
     View on GitHub
   </a>
 );

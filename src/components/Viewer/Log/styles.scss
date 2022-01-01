@@ -19,6 +19,10 @@
       cursor: pointer;
       transition: background 0.5s ease-in;
 
+      svg {
+        margin-left: 10px;
+      }
+
       &:hover {
         background: black;
       }
