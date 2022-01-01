@@ -1,0 +1,42 @@
+.Names {
+  position: relative;
+  padding: 9px;
+  border-right: 1px solid white;
+
+  button {
+    margin-left: 10px;
+  }
+
+  > input {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 20;
+  }
+
+  .chips {
+    position: absolute;
+    padding: 5px;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+  }
+
+  .chip {
+    display: inline-block;
+    padding: 3px 6px;
+    margin: 0 3px;
+    background: white;
+    color: black;
+    border-radius: 5px;
+  }
+}
+
+.Header .Names > input {
+  border: 0;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+}

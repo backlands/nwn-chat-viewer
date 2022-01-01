@@ -1,12 +1,15 @@
 import React, { useCallback, useState } from 'react';
-import useStore from '../../../utilities/filtering';
+import shallow from 'zustand/shallow';
 
 import Message from '../Message';
 
+import useStore from '../../../utilities/filtering';
 import './styles.scss';
 
 const Log = ({ chatlog, portraits, title }) => {
-  const search = useStore((state) => state.search);
+  const { search, names } = useStore((state) => (
+    { search: state.search, names: state.names }
+  ), shallow);
   const [visible, setVisible] = useState(true);
 
   const toggleLog = useCallback(
@@ -16,9 +19,12 @@ const Log = ({ chatlog, portraits, title }) => {
     [visible],
   );
 
-  const filteredLog = search
-    ? chatlog.filter(({ content }) => content.toLowerCase().includes(search.toLowerCase()))
-    : [...chatlog];
+  const checkFilters = ({ username, character, content }) => (
+    content.toLowerCase().includes(search.toLowerCase())
+      && (names.includes(username) || names.includes(character))
+  );
+
+  const filteredLog = search || names.length > 0 ? chatlog.filter(checkFilters) : [...chatlog];
 
   return (
     <div className="Log">

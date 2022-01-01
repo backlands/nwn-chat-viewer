@@ -1,23 +1,19 @@
 import React from 'react';
-import shallow from 'zustand/shallow';
 
 import Badge from './Badge';
+import Names from './Names';
+import Search from './Search';
 
-import useStore from '../../utilities/filtering';
 import './styles.scss';
 
-const Header = () => {
-  const { search, setSearch } = useStore((state) => (
-    { search: state.search, setSearch: state.setSearch }
-  ), shallow);
+const Header = () => (
+  <div className="Header">
+    <Names />
 
-  return (
-    <div className="Header">
-      <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} />
+    <Search />
 
-      <Badge />
-    </div>
-  );
-};
+    <Badge />
+  </div>
+);
 
 export default Header;
