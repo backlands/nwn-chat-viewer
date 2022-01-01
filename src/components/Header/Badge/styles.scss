@@ -6,6 +6,10 @@
   transition: background-color 0.5s ease-in;
   text-decoration: none;
 
+  svg {
+    margin-right: 5px;
+  }
+
   &:hover {
     background: #222;
   }

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import shallow from 'zustand/shallow';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 import useStore from '../../../utilities/filtering';
 
@@ -31,23 +33,21 @@ const Names = () => {
           {names.map((name, index) => (
             <span className="chip">
               {name}
-              <button
+              <FontAwesomeIcon
+                icon={faMinus}
                 type="button"
                 onClick={() => removeName(index)}
-              >
-                -
-              </button>
+              />
             </span>
           ))}
         </div>
       )}
 
-      <button
+      <FontAwesomeIcon
+        icon={addNew ? faChevronUp : faChevronDown}
         type="button"
         onClick={() => setAddNew(!addNew)}
-      >
-        {addNew ? '-' : '+'}
-      </button>
+      />
 
       { addNew && (
         <input
