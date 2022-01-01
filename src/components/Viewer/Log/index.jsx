@@ -1,6 +1,8 @@
 import React, { useCallback, useMemo, useState, useRef } from 'react';
 import shallow from 'zustand/shallow';
 import { jsPDF as JSPDF } from 'jspdf';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
 
 import Roboto from './Roboto-Slab-normal';
 import Message from '../Message';
@@ -12,8 +14,10 @@ const Log = ({ chatlog, portraits, title }) => {
   const { search, names } = useStore((state) => (
     { search: state.search, names: state.names }
   ), shallow);
+
   const [visible, setVisible] = useState(true);
   const logInstance = useRef(null);
+  const [exporting, setExporting] = useState(false);
 
   const toggleLog = useCallback(
     () => {
@@ -33,6 +37,7 @@ const Log = ({ chatlog, portraits, title }) => {
 
   const runExport = useCallback(
     () => {
+      setExporting(true);
       // Default export is a4 paper, portrait, using millimeters for units
       const doc = new JSPDF();
 
@@ -45,6 +50,7 @@ const Log = ({ chatlog, portraits, title }) => {
       doc.html(logInstance.current, {
         callback: (pdf) => {
           pdf.save(`chatlog-${new Date()}`);
+          setExporting(false);
         },
         width: 220,
         windowWidth: 600,
@@ -73,13 +79,25 @@ const Log = ({ chatlog, portraits, title }) => {
       <div className="heading">
         <button type="button" className="title" onClick={toggleLog}>{title}</button>
 
-        <button
-          className="ExportPDF"
-          type="button"
-          onClick={runExport}
-        >
-          Export PDF of Chatlog
-        </button>
+        {contents && (
+          <button
+            className="ExportPDF"
+            type="button"
+            onClick={runExport}
+          >
+            {
+              exporting
+                ? (
+                  <span>
+                    Exporting
+                    {' '}
+                    <FontAwesomeIcon icon={faSync} spin />
+                  </span>
+                )
+                : `Export PDF of ${title}`
+            }
+          </button>
+        )}
       </div>
 
       {contents}
