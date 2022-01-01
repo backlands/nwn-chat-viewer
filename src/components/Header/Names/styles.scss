@@ -1,7 +1,19 @@
 .Names {
   position: relative;
-  padding: 9px;
-  border-right: 1px solid white;
+
+  .toggle {
+    padding: 9px;
+    border: 0;
+    font: var(--fontMain);
+    color: black;
+    background-color: white;
+    transition: background-color 0.3s ease-in;
+
+    &:hover {
+      background-color: #8778ef;
+    }
+  }
+
 
   svg {
     margin-left: 10px;
@@ -12,25 +24,33 @@
     top: 100%;
     left: 0;
     right: 0;
-    width: 100%;
+    width: calc(100% + 1px);
     z-index: 20;
   }
 
   .chips {
     position: absolute;
-    padding: 5px;
     top: 100%;
     left: 0;
+    width: 100vw;
     z-index: 10;
   }
 
   .chip {
     display: inline-block;
     padding: 3px 6px;
-    margin: 0 3px;
-    background: white;
-    color: black;
+    margin: 6px 3px;
+    border: 0;
+    cursor: pointer;
     border-radius: 5px;
+    font: var(--fontMain);
+    color: black;
+    background-color: white;
+    transition: background-color 0.3s ease-in;
+
+    &:hover {
+      background-color: #8778ef;
+    }
   }
 }
 

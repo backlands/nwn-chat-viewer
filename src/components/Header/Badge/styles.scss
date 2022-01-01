@@ -1,9 +1,9 @@
 .Badge {
   padding: 10px;
   margin-left: auto;
-  border-left: 1px solid white;
-  color: white;
-  transition: background-color 0.5s ease-in;
+  color: black;
+  background-color: white;
+  transition: background-color 0.3s ease-in;
   text-decoration: none;
 
   svg {
@@ -11,6 +11,6 @@
   }
 
   &:hover {
-    background: #222;
+    background-color: #8778ef;
   }
 }

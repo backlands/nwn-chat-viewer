@@ -26,28 +26,29 @@ const Names = () => {
 
   return (
     <div className="Names">
-      <span>Filter by name / player</span>
+      <button
+        className="toggle"
+        type="button"
+        onClick={() => setAddNew(!addNew)}
+      >
+        <span>Filter by name / player</span>
+
+        <FontAwesomeIcon
+          icon={addNew ? faChevronUp : faChevronDown}
+          type="button"
+        />
+      </button>
 
       { names.length > 0 && (
         <div className="chips">
           {names.map((name, index) => (
-            <span className="chip">
+            <button type="button" className="chip" onClick={() => removeName(index)}>
               {name}
-              <FontAwesomeIcon
-                icon={faMinus}
-                type="button"
-                onClick={() => removeName(index)}
-              />
-            </span>
+              <FontAwesomeIcon icon={faMinus} type="button" />
+            </button>
           ))}
         </div>
       )}
-
-      <FontAwesomeIcon
-        icon={addNew ? faChevronUp : faChevronDown}
-        type="button"
-        onClick={() => setAddNew(!addNew)}
-      />
 
       { addNew && (
         <input
