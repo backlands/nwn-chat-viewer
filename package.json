@@ -1,6 +1,6 @@
 {
   "name": "nwn-chat-viewer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A viewer for NWN chat logs.",
   "main": "src/index.js",
   "scripts": {
