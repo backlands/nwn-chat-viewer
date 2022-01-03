@@ -27,12 +27,21 @@ const Log = ({ chatlog, portraits, title }) => {
   );
 
   const filteredLog = useMemo(() => {
-    const checkFilters = ({ username, character, content }) => (
-      content.toLowerCase().includes(search.toLowerCase())
-        && (names.includes(username) || names.includes(character))
-    );
+    const checkFilters = ({ username, character, content }) => {
+      let valid = true;
 
-    return search || names.length > 0 ? chatlog.filter(checkFilters) : [...chatlog];
+      if (names.length > 0) {
+        valid = names.includes(username) || names.includes(character);
+      }
+
+      if (search.length > 0) {
+        valid = valid && content.toLowerCase().includes(search.toLowerCase());
+      }
+
+      return valid;
+    };
+
+    return search.length > 0 || names.length > 0 ? chatlog.filter(checkFilters) : [...chatlog];
   }, [chatlog, names, search]);
 
   const runExport = useCallback(
