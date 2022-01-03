@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Badge from './Badge';
+import Toggles from './Toggles';
 import Names from './Names';
 import Search from './Search';
 
@@ -11,6 +12,8 @@ const Header = () => (
     <Names />
 
     <Search />
+
+    <Toggles />
 
     <Badge />
   </div>

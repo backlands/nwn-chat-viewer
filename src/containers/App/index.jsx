@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader';
 import React, { useState } from 'react';
 
 import Header from '../../components/Header';
@@ -6,7 +7,7 @@ import Viewer from '../../components/Viewer';
 
 import './styles.scss';
 
-export default () => {
+const App = () => {
   const [file, setFile] = useState(undefined);
 
   const classes = file ? 'App viewing' : 'App';
@@ -31,3 +32,5 @@ export default () => {
     </div>
   );
 };
+
+export default hot(module)(App);

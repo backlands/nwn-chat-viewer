@@ -1,14 +1,20 @@
 import React from 'react';
+import shallow from 'zustand/shallow';
 
+import useStore from '../../../utilities/filtering';
 import PORTRAIT from '../../../assets/blank_portrait.jpg';
 import './styles.scss';
 
 const Message = ({ message, portrait }) => {
+  const { portrait: hidePortrait, language: hideLanguage } = useStore((state) => ({
+    portrait: state.portrait,
+    language: state.language,
+  }), shallow);
   const { username, character, type, language, content } = message;
 
   return (
     <div className="Message">
-      {portrait && (
+      {portrait && !hidePortrait && (
         <div className="portrait">
           <img alt={username || character} title={username || character} src={PORTRAIT} />
         </div>
@@ -23,7 +29,7 @@ const Message = ({ message, portrait }) => {
               <span className={`type ${type.toLowerCase()}`}>{`[${type}] `}</span>
             )}
 
-            {language.name && (
+            {!hideLanguage && language.name && (
               <span style={{ color: `rgb(${language.color[0]}, ${language.color[1]}, ${language.color[2]})` }}>
                 {`[${language.name}]: `}
               </span>

@@ -11,9 +11,12 @@ import useStore from '../../../utilities/filtering';
 import './styles.scss';
 
 const Log = ({ chatlog, portraits, title }) => {
-  const { search, names } = useStore((state) => (
-    { search: state.search, names: state.names }
-  ), shallow);
+  const { search, names, tell, system } = useStore((state) => ({
+    search: state.search,
+    names: state.names,
+    tell: state.tell,
+    system: state.system,
+  }), shallow);
 
   const [visible, setVisible] = useState(true);
   const logInstance = useRef(null);
@@ -27,7 +30,15 @@ const Log = ({ chatlog, portraits, title }) => {
   );
 
   const filteredLog = useMemo(() => {
-    const checkFilters = ({ username, character, content }) => {
+    const checkFilters = ({ username, character, type, content }) => {
+      if (system && (!username && type !== 'Tell')) {
+        return false;
+      }
+
+      if (tell && type === 'Tell') {
+        return false;
+      }
+
       let valid = true;
 
       if (names.length > 0) {
@@ -41,8 +52,8 @@ const Log = ({ chatlog, portraits, title }) => {
       return valid;
     };
 
-    return search.length > 0 || names.length > 0 ? chatlog.filter(checkFilters) : [...chatlog];
-  }, [chatlog, names, search]);
+    return chatlog.filter(checkFilters);
+  }, [chatlog, names, search, system, tell]);
 
   const runExport = useCallback(
     () => {
